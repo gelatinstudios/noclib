@@ -53,7 +53,7 @@ void print_long(long n) {
         size_t digits = 0;
         long n1 = n;
         long denom = 1;
-        while (n1 > 10) {
+        while (n1 >= 10) {
                 n1 /= 10;
                 denom *= 10;
                 ++digits;
