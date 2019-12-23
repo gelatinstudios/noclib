@@ -50,6 +50,23 @@ static float read_float(void) {
         return n;
 }
 
+static char *print_float_converter(long n, char *c) {
+        long denom = 1;
+        long n1 = n;
+        while (n1 >= 10) {
+                n1 /= 10;
+                denom *= 10;
+        }
+
+        while (denom) {
+                *c = n / denom + '0';
+                n %= denom;
+                denom /= 10;
+                ++c;
+        }
+        return c;
+}
+
 static void print_float(float f) {
         char buffer[256] = {0};
         char *c = buffer;
@@ -64,37 +81,12 @@ static void print_float(float f) {
         long integer = f;
         long fraction = (f - integer) * 1000;
 
-        long n = integer;
-        long denom = 1;
-        while (n >= 10) {
-                n /= 10;
-                denom *= 10;
-        }
-
-        while (denom) {
-                *c = integer / denom + '0';
-                integer %= denom;
-                denom /= 10;
-                ++c;
-        }
-
-        *c = '.';
-        ++c;
+        c = print_float_converter(integer, c);
 
         if (fraction) {
-                n = fraction;
-                denom = 1;
-                while (n >= 10) {
-                        n /= 10;
-                        denom *= 10;
-                }
-
-                while (denom) {
-                        *c = fraction / denom + '0';
-                        fraction %= denom;
-                        denom /= 10;
-                        ++c;
-                }
+                *c = '.';
+                ++c;
+                c = print_float_converter(fraction, c);
         }
         *c = 0;
 
