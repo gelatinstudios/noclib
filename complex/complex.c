@@ -71,10 +71,8 @@ static void print_float(float f) {
         char buffer[256] = {0};
         char *c = buffer;
 
-        bool is_negative = false;
         if (f < 0) {
                 f = -f;
-                is_negative = true;
                 *c = '-';
                 ++c;
         }
