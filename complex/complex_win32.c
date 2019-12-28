@@ -1,7 +1,8 @@
 
-#include <unistd.h>
+#include <io.h>
 #include <xmmintrin.h>
 
+#define write _write
 #define stdin_fd 0
 #define stdout_fd 1
 
@@ -12,7 +13,7 @@ static float square_root(const float x) {
 }
 
 static void newline(void) {
-        write(stdout_fd, "\n", 2);
+        write(stdout_fd, "\r\n", 3);
 }
 
 static void print_str(const char *str, const size_t length) {
@@ -99,7 +100,7 @@ static void print_float(float f) {
 }
 
 int main(void) {
-        print_str("y = ax^2 + bx + c\n", 19);
+        print_str("y = ax^2 + bx + c\r\n", 20);
         print_str("a = ", 5);
         const float a = read_float();
         print_str("b = ", 5);
@@ -113,7 +114,7 @@ int main(void) {
         const float real = -b / denom;
 
         if (imag < 0) {
-                print_str("the roots are complex\n", 23);
+                print_str("the roots are complex\r\n", 24);
                 if (denom < 0) denom = -denom;
                 imag = square_root(-imag) / denom;
                 print_str("they are ", 10);
@@ -122,7 +123,7 @@ int main(void) {
                 print_float(imag);
                 print_str("i", 2);
         } else {
-                print_str("the roots are real\n", 20);
+                print_str("the roots are real\r\n", 21);
                 imag = square_root(imag) / denom;
                 const float root1 = real + imag;
                 const float root2 = real - imag;
